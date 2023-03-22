@@ -1,0 +1,22 @@
+{
+    "name": "riddle/client",
+    "type": "bundle",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4|^8.0|^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Riddle\\Api\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Riddle\\Api\\Tests\\": "tests/"
+        }
+    }
+}
