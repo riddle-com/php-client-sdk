@@ -6,12 +6,14 @@ Available endpoints can be found [here](https://www.riddle.com/creator/v3/docs).
 
 ## Installation
 
+To use this library you need to have PHP 7.4 or higher (8.0 / 8.1) installed.
+
 ### With composer
 
 When working with composer all you need to do is run the following command:
 
 ```
-composer require riddle/client
+composer require riddle/client-sdk
 ```
 
 ### Without composer
