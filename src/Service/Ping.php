@@ -8,6 +8,6 @@ class Ping extends ApiService
 {
     public function ping(): bool
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/ping') === 'pong';
+        return $this->client->getHTTPConnector()->getArrayContent('ping') === 'pong';
     }
 }

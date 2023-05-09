@@ -25,7 +25,7 @@ class Riddle extends ApiService
      */
     public function getRiddle(string $riddleUUID): array
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/riddle/' . $riddleUUID);
+        return $this->client->getHTTPConnector()->getArrayContent('riddle/' . $riddleUUID);
     }
 
     /**
@@ -36,7 +36,7 @@ class Riddle extends ApiService
      */
     public function getEmbedCode(string $riddleUUID): string
     {
-        return $this->client->getHTTPConnector()->getStringContent('api/riddle/embed-code/' . $riddleUUID);
+        return $this->client->getHTTPConnector()->getStringContent('riddle/embed-code/' . $riddleUUID);
     }
 
     /**
@@ -55,7 +55,7 @@ class Riddle extends ApiService
      */
     public function list(?int $teamId = null, ?string $riddleType = null, array $tagIds = null, ?string $status = null, ?string $search = null, ?string $sortBy = null, ?string $sortOrder = null, ?int $page = null): array
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/riddle/list', [], [
+        return $this->client->getHTTPConnector()->getArrayContent('riddle/list', [], [
             'team' => $teamId,
             'type' => $riddleType,
             'tags' => $tagIds,
@@ -69,17 +69,17 @@ class Riddle extends ApiService
 
     public function publish(string $riddleUUID): array
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/riddle/publish'.$riddleUUID, [], [], 'POST');
+        return $this->client->getHTTPConnector()->getArrayContent('riddle/publish'.$riddleUUID, [], [], 'POST');
     }
 
     public function unpublish(string $riddleUUID): array
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/riddle/unpublish'.$riddleUUID, [], [], 'POST');
+        return $this->client->getHTTPConnector()->getArrayContent('riddle/unpublish'.$riddleUUID, [], [], 'POST');
     }
 
     public function rename(string $riddleUUID, string $newTitle)
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/riddle/rename'.$riddleUUID, [], [
+        return $this->client->getHTTPConnector()->getArrayContent('riddle/rename'.$riddleUUID, [], [
             'title' => $newTitle,
         ], 'POST');
     }

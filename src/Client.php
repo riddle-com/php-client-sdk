@@ -7,21 +7,23 @@ use Riddle\Api\Service\Oauth;
 use Riddle\Api\Service\Ping;
 use Riddle\Api\Service\Project;
 use Riddle\Api\Service\Riddle;
+use Riddle\Api\Service\RiddleBuilder;
 use Riddle\Api\Service\RiddleV1;
 
 require_once(__DIR__ . '/HTTPConnector.php');
 
 class Client
 {
-    public const DEFAULT_BASE_URL = 'https://www.riddle.com/creator/v2';
+    public const CREATOR_BASE_URL = 'https://www.riddle.com/creator';
+    public const API_BASE_URL = 'https://www.riddle.com/api/v3';
 
     private string $accessToken;
     private HTTPConnector $httpConnector;
 
-    public function __construct(?string $accessToken = null, ?string $baseUrl = null)
+    public function __construct(string $accessToken, ?string $creatorBaseUrl = null, ?string $apiBaseUrl = null)
     {
         $this->accessToken = $accessToken;
-        $this->httpConnector = new HTTPConnector($this, $baseUrl ?? self::DEFAULT_BASE_URL);
+        $this->httpConnector = new HTTPConnector($this, $creatorBaseUrl ?? self::CREATOR_BASE_URL, $apiBaseUrl ?? self::API_BASE_URL);
     }
 
     /**
@@ -40,6 +42,11 @@ class Client
     public function riddle(): Riddle
     {
         return new Riddle($this);
+    }
+
+    public function riddleBuilder(): RiddleBuilder
+    {
+        return new RiddleBuilder($this);
     }
 
     public function riddleV1(): RiddleV1

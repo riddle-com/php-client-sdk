@@ -8,6 +8,6 @@ class Project extends ApiService
 {
     public function list(): array
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/project/list')['items'] ?? [];
+        return $this->client->getHTTPConnector()->getArrayContent('project/list')['items'] ?? [];
     }
 }

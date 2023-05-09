@@ -80,3 +80,78 @@ try {
 ```
 
 **Note**: The webhook signature key is not required - if it's not given the signature validation will be skipped.
+
+
+### Build riddles
+
+You can also build riddles via the API.Please note that this feature is currently in-beta and is expected to be expanded in the future.
+
+Please drop us any feedback you have on this feature via support chat on [riddle.com](https://www.riddle.com) or send us an email @ [hello@riddle.com](mailto:hello@riddle.com)!
+
+
+To use this feature, create an instance of either `PollBuilder` or `QuizBuilder`:
+
+```php
+require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Builder/PollBuilder.php';
+
+$client = new Riddle\Api\Client('access token');
+$pollBuilder = new Riddle\Api\Builder\PollBuilder($client);
+```
+
+#### Build a poll
+
+When building a poll you can:
+- set the title
+- add single choice questions
+- add multiple choice questions
+- set the single result the user will see at the end of the Riddle
+
+Here's the full code snippet:
+
+```php
+require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Builder/PollBuilder.php';
+
+$client = new Riddle\Api\Client('access token');
+$pollBuilder = new Riddle\Api\Builder\PollBuilder($client);
+
+// configure the poll's settings, such as questions / title / result
+$pollBuilder
+    ->setTitle('My Riddle Title')
+    ->addSingleChoiceQuestion('What is the answer?', ['Yes', 'No', 'Maybe'])
+    ->addMultipleChoiceQuestion('What are the answers?', ['Yes', 'No', 'Maybe'])
+    ->setResult('Thanks for participating!', 'We will process your answers accordingly.');
+
+// requests the API and returns the built poll
+$builtPoll = $pollBuilder->build();
+```
+
+#### Build a quiz
+
+When building a quiz you can:
+- set the title
+- add single choice questions
+- add multiple choice questions
+- add as many results as you want, each with a title, description and score range (min/max)
+
+Here's the full code snippet:
+
+```php
+require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Builder/QuizBuilder.php';
+
+$client = new Riddle\Api\Client('access token');
+$quizBuilder = new Riddle\Api\Builder\QuizBuilder($client);
+
+// configure the quizz settings, such as questions / title / results
+$quizBuilder
+    ->setTitle('My Riddle Title')
+    ->addSingleChoiceQuestion('What is the capital of germany?', ['Berlin' => true, 'Munich' => false, 'Hamburg' => false])
+    ->addMultipleChoiceQuestion('Which words can you use to say "Hello" in German?', ['Hallo' => true, 'Ciao' => false, 'Guten Tag' => true])
+    ->addResult('Not so good', 'You answered most questions incorrectly.', 0, 50)
+    ->addResult('Well done', 'You answered most questions correctly.', 51, 100);
+
+// requests the API and returns the built quiz
+$builtQuiz = $quizBuilder->build();
+```

@@ -16,12 +16,12 @@ class Oauth extends ApiService
      */
     public function getAuthUrl(string $callbackUrl, ?string $state = null): string
     {
-        return $this->client->getHTTPConnector()->buildUrl('oauth/authorize', [
+        return $this->client->getHTTPConnector()->buildUrl('oauth/authorize',[
             'client_id' => '',
             'redirect_uri' => $callbackUrl,
             'state' => $state,
             'type'=> 'wordpress',
-        ]);
+        ], false);
     }
 
     /**
@@ -35,6 +35,6 @@ class Oauth extends ApiService
     {
         return $this->client->getHTTPConnector()->getArrayContent('oauth/access-token', [], [
             'code' => $code,
-        ], 'POST')['accessToken'];
+        ], 'POST', [200], false)['accessToken'];
     }
 }

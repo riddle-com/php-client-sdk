@@ -17,25 +17,29 @@ class HTTPConnector
 {
     private Client $client;
     private string $baseUrl;
+    private string $baseApiUrl;
 
-    public function __construct(Client $client, string $baseUrl)
+    public function __construct(Client $client, string $baseUrl, string $baseApiUrl)
     {
         $this->client = $client;
         $this->baseUrl = $baseUrl;
+        $this->baseApiUrl = $baseApiUrl;
     }
 
-    public function buildUrl(string $endpoint, array $queryParameters = [])
+    public function buildUrl(string $endpoint, array $queryParameters = [], bool $isApi = true)
     {
+        $baseUrl = $isApi ? $this->baseApiUrl : $this->baseUrl;
+
         if (empty($queryParameters)) {
-            return \sprintf('%s/%s', $this->baseUrl, $endpoint);
+            return \sprintf('%s/%s', $baseUrl, $endpoint);
         }
         
-        return \sprintf('%s/%s?%s', $this->baseUrl, $endpoint, \http_build_query($queryParameters));
+        return \sprintf('%s/%s?%s', $baseUrl, $endpoint, \http_build_query($queryParameters));
     }
 
-    public function getArrayContent(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', array $acceptedCodes = [200]): array
+    public function getArrayContent(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', array $acceptedCodes = [200], bool $isApi = true): array
     {
-        return $this->request($endpoint, $queryParameters, $jsonParameters, $method, true, $acceptedCodes)->getContent();
+        return $this->request($endpoint, $queryParameters, $jsonParameters, $method, true, $acceptedCodes, $isApi)->getContent();
     }
 
     public function getStringContent(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', array $acceptedCodes = [200]): string
@@ -46,9 +50,9 @@ class HTTPConnector
     /**
      * @return string|Response returns only a string if $expectJson is set to false; a whole Response object instead if it is a JSON Request
      */
-    public function request(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', bool $expectJson = true, array $acceptedCodes = [200])
+    public function request(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', bool $expectJson = true, array $acceptedCodes = [200], bool $isApi = true)
     {
-        $url = $this->buildUrl($endpoint, $queryParameters);
+        $url = $this->buildUrl($endpoint, $queryParameters, $isApi);
         $ch = \curl_init();
         $curl_opt = [
             CURLOPT_RETURNTRANSFER => true,

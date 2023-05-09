@@ -13,6 +13,6 @@ class AccessToken extends ApiService
      */
     public function revoke(): bool
     {
-        return $this->client->getHTTPConnector()->getArrayContent('api/access-token/revoke', [], [], 'DELETE')['revoked'];
+        return $this->client->getHTTPConnector()->getArrayContent('access-token/revoke', [], [], 'DELETE')['revoked'];
     }
 }
