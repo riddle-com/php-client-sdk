@@ -155,3 +155,9 @@ $quizBuilder
 // requests the API and returns the built quiz
 $builtQuiz = $quizBuilder->build();
 ```
+
+**Note:** Generated Riddles will be automatically published. To disable this you must pass `false` to the `build()` method:
+
+```php
+$builtQuiz = $quizBuilder->build(false);
+```
