@@ -9,6 +9,7 @@ use Riddle\Api\Service\Project;
 use Riddle\Api\Service\Riddle;
 use Riddle\Api\Service\RiddleBuilder;
 use Riddle\Api\Service\RiddleV1;
+use Riddle\Api\Service\Stats;
 
 require_once(__DIR__ . '/HTTPConnector.php');
 
@@ -62,6 +63,11 @@ class Client
     public function accessToken(): AccessToken
     {
         return new AccessToken($this);
+    }
+
+    public function stats(): Stats
+    {
+        return new Stats($this);
     }
 
     /**

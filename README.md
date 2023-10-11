@@ -1,6 +1,8 @@
 # Riddle PHP client
 
-This library makes it easy to work with the Riddle API v3 & its webhook integration.
+This library makes it easy to work with...
+- the Riddle API v3
+- incoming Riddle webhooks (validates & parses them)
 
 Available endpoints can be found [here](https://www.riddle.com/creator/v3/docs).
 
@@ -14,6 +16,14 @@ When working with composer all you need to do is run the following command:
 
 ```
 composer require riddle/client-sdk
+```
+
+In your .php file you can then include the composer autoloader:
+
+```php
+require 'vendor/autoload.php';
+
+// [... your code, e.g. fetching riddles / stats / ...]
 ```
 
 ### Without composer
@@ -48,6 +58,15 @@ require 'riddle-client/src/Client.php';
 
 $client = new Riddle\Api\Client('access token');
 $riddles = $client->riddle()->list();
+```
+
+### Get alltime stats for a Riddle (only available for Business & Enterprise plans)
+
+```php
+require 'riddle-client/src/Client.php';
+
+$client = new Riddle\Api\Client('access token');
+$riddleStats = $client->stats()->fetchRiddleStats('[RIDDLE_ID]');
 ```
 
 ### Get riddles from team with tags
