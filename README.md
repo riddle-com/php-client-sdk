@@ -55,6 +55,7 @@ Now you're ready to use the API.
 
 ```php
 require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Service/Riddle.php';
 
 $client = new Riddle\Api\Client('access token');
 $riddles = $client->riddle()->list();
@@ -64,6 +65,7 @@ $riddles = $client->riddle()->list();
 
 ```php
 require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Service/Stats.php';
 
 $client = new Riddle\Api\Client('access token');
 $riddleStats = $client->stats()->fetchRiddleStats('[RIDDLE_ID]');
@@ -73,6 +75,7 @@ $riddleStats = $client->stats()->fetchRiddleStats('[RIDDLE_ID]');
 
 ```php
 require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Service/Riddle.php';
 
 $teamId = 123;
 $tagIds = [2]; // to get tag IDs use the tag list endpoint
