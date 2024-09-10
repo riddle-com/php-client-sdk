@@ -183,3 +183,77 @@ $builtQuiz = $quizBuilder->build();
 ```php
 $builtQuiz = $quizBuilder->build(false);
 ```
+
+### Building Riddles with custom result pages (buttons, answered blocks etc)
+
+```php
+require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Builder/PollBuilder.php';
+require 'riddle-client/src/Builder/QuizBuilder.php';
+
+$client = new Riddle\Api\Client('access token');
+$quizBuilder = ;
+
+// custom result page via the ResultPage class
+$resultPage = (new Riddle\Api\Builder\Objects\ResultPage())
+    ->addTextBlock('Thank you for participating in our poll!')
+    ->addAnsweredBlocks()
+    ->addMedia('MEDIA_RUL')
+    ->addSocialShare('Share this poll with your friends!', 'Check out this poll', 'This is a poll about colors')
+    ->addButton('Go to our website', 'https://www.riddle.com', true)
+;
+
+// Adding it to a quiz
+$quizBuilder = new (new Riddle\Api\Builder\QuizBuilder($client))
+    // - >... // add other questions, form fields, etc
+    ->addResultPage($resultPage, minPercentage: 0, maxPercentage: 100);
+
+// Adding it to a poll (only one result page possible)
+$pollBuilder = new (new Riddle\Api\Builder\PollBuilder($client))
+    // - >... // add other questions, form fields, etc
+    ->setResultPage($resultPage);
+```
+
+### Building Riddles with forms
+
+You can add "Make a form" blocks to your Riddle. This allows you to collect user data (name, email, phone, etc).
+
+```php
+require 'riddle-client/src/Client.php';
+require 'riddle-client/src/Builder/QuizBuilder.php';
+
+$client = new Riddle\Api\Client('access token');
+
+// custom form field builder via the FormFieldBuilder class
+$formBuilder = (new Riddle\Api\Builder\Objects\FormFieldBuilder())
+    ->setTitle('Contact us')
+    ->addNameField('My name field')
+    ->addEmailField('My email field')
+    ->addPhoneField('My phone field')
+    ->addUrlField('My URL field')
+    ->addNumberField('My number field')
+    ->addCountryField('My country field')
+    ->addShortTextField('My short text field')
+    ->addLongTextField('My long text field')
+
+// Adding it to any builder (poll, quiz, etc)
+$quizBuilder = new (new Riddle\Api\Builder\QuizBuilder($client))
+    // - >... // add other questions, form fields, etc
+    ->addFormBuilder($formBuilder);
+```
+
+
+### Manipulating the build directly
+
+We are aware that the current builder classes does not cover all possibilities of the builder API (there are just too many!).
+
+Therefore, you can also manipulate the build directly:
+
+```php
+$quizBuilder = new (new Riddle\Api\Builder\QuizBuilder($client));
+
+$rawBuild = $quizBuilder->getRawBuild();
+$rawBuild['publish']['isShowcaseEnabled'] = false; // advanced option to disable Riddle showcase (only available embedded on customer page)
+
+$quizBuilder->setRawBuild($rawBuild);
+```

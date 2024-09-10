@@ -2,9 +2,12 @@
 
 namespace Riddle\Api\Builder;
 
+use Riddle\Api\Builder\Objects\FormFieldBuilder;
 use Riddle\Api\Client;
 
-require_once(__DIR__ . '/../Client.php');
+require_once (__DIR__ . '/../Client.php');
+require_once (__DIR__ . '/Objects/ResultPage.php');
+require_once (__DIR__ . '/Objects/FormFieldBuilder.php');
 
 /**
  * Abstract class which helps us to build Riddle type specific builder classes.
@@ -37,25 +40,37 @@ abstract class RiddleBuilderFrame
         return $this->client->riddleBuilder()->buildRiddle($this->type, $this->build, $publishAfterCreation);
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title): static
     {
         $this->build['title'] = $title;
 
         return $this;
     }
 
-    public function addSingleChoiceQuestion(string $title, array $items): static
-    {
-        $this->validateQuestionItems($items);
-
-        return $this->addBlock($title, 'SingleChoice', $items);
-    }
-
     public function addMultipleChoiceQuestion(string $title, array $items): static
     {
         $this->validateQuestionItems($items);
+        $properties = ['items' => $items];
 
-        return $this->addBlock($title, 'SingleChoice', $items);
+        return $this->addBlock($title, 'MultipleChoice', $properties);
+    }
+
+    public function addFormBuilder(FormFieldBuilder $formBuilder): static
+    {
+        return $this->addBlock($formBuilder->getTitle(), 'FormFieldBuilder', ['fields' => $formBuilder->getFields()]);
+    }
+
+    /**
+     * Inserts a form into the Riddle; must be in same personal project or custom project.
+     */
+    public function insertForm(string $formUUID): static
+    {
+        $this->build['blocks'][] = [
+            'type' => 'FormSelect',
+            'form' => $formUUID,
+        ];
+
+        return $this;
     }
 
     public function getRawBuild(): array
@@ -63,12 +78,24 @@ abstract class RiddleBuilderFrame
         return $this->build;
     }
 
-    protected function addBlock(string $title, string $type, array $items): self
+    public function setRawBuild(array $build): static
+    {
+        $this->build = $build;
+
+        return $this;
+    }
+
+    protected function addItemsBlock(string $title, string $type, array $items): static
+    {
+        return $this->addBlock($title, $type, ['items' => $items]);
+    }
+
+    protected function addBlock(string $title, string $type, array $properties): static
     {
         $this->build['blocks'][] = [
             'title' => $title,
             'type' => $type,
-            'items' => $items,
+            ...$properties,
         ];
 
         return $this;
