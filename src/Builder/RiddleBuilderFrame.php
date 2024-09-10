@@ -50,9 +50,8 @@ abstract class RiddleBuilderFrame
     public function addMultipleChoiceQuestion(string $title, array $items): static
     {
         $this->validateQuestionItems($items);
-        $properties = ['items' => $items];
 
-        return $this->addBlock($title, 'MultipleChoice', $properties);
+        return $this->addBlock($title, 'MultipleChoice', ['items' => $items]);
     }
 
     public function addFormBuilder(FormFieldBuilder $formBuilder): static

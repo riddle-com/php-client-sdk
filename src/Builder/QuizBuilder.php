@@ -68,7 +68,7 @@ class QuizBuilder extends RiddleBuilderFrame
 
     public function addTypeAnswerQuestion(string $title, array $answers): static
     {
-        return $this->addBlock($title, 'TextEntry', $answers);
+        return $this->addBlock($title, 'TextEntry', ['answers' => $answers]);
     }
 
     public function addResult(string $title, string $description, int $minPercentage, int $maxPercentage): self

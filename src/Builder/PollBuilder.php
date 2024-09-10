@@ -31,7 +31,7 @@ class PollBuilder extends RiddleBuilderFrame
     {
         $this->validateQuestionItems($items);
 
-        return $this->addBlock($title, 'SingleChoice', $items);
+        return $this->addBlock($title, 'SingleChoice', ['items' => $items]);
     }
     /**
      * To set a simple resuls page with title and description.
