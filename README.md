@@ -104,9 +104,9 @@ try {
 **Note**: The webhook signature key is not required - if it's not given the signature validation will be skipped.
 
 
-### Build riddles
+### Build basic Riddles
 
-You can also build riddles via the API.Please note that this feature is currently in-beta and is expected to be expanded in the future.
+You can also build Riddles via the API.Please note that this feature is currently in-beta and is expected to be expanded in the future.
 
 Please drop us any feedback you have on this feature via support chat on [riddle.com](https://www.riddle.com) or send us an email @ [hello@riddle.com](mailto:hello@riddle.com)!
 
@@ -192,7 +192,6 @@ require 'riddle-client/src/Builder/PollBuilder.php';
 require 'riddle-client/src/Builder/QuizBuilder.php';
 
 $client = new Riddle\Api\Client('access token');
-$quizBuilder = ;
 
 // custom result page via the ResultPage class
 $resultPage = (new Riddle\Api\Builder\Objects\ResultPage())
@@ -214,7 +213,7 @@ $pollBuilder = new (new Riddle\Api\Builder\PollBuilder($client))
     ->setResultPage($resultPage);
 ```
 
-### Building Riddles with forms
+### Build Riddles with forms
 
 You can add "Make a form" blocks to your Riddle. This allows you to collect user data (name, email, phone, etc).
 
@@ -234,7 +233,7 @@ $formBuilder = (new Riddle\Api\Builder\Objects\FormFieldBuilder())
     ->addNumberField('My number field')
     ->addCountryField('My country field')
     ->addShortTextField('My short text field')
-    ->addLongTextField('My long text field')
+    ->addLongTextField('My long text field');
 
 // Adding it to any builder (poll, quiz, etc)
 $quizBuilder = new (new Riddle\Api\Builder\QuizBuilder($client))
@@ -243,9 +242,9 @@ $quizBuilder = new (new Riddle\Api\Builder\QuizBuilder($client))
 ```
 
 
-### Manipulating the build directly
+### Manipulate the build directly
 
-We are aware that the current builder classes does not cover all possibilities of the builder API (there are just too many!).
+We are aware that the current builder classes in this SDK do not cover all possibilities of the builder API (there are just too many!).
 
 Therefore, you can also manipulate the build directly:
 
