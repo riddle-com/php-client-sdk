@@ -6,6 +6,14 @@ require_once(__DIR__ . '/ApiService.php');
 
 class Stats extends ApiService
 {
+    public function fetchRiddleBreakdown(string $riddleId, ?string $dateFrom = null, ?string $dateTo = null): array
+    {
+        return $this->client->getHTTPConnector()->getArrayContent('stats/breakdown/'.$riddleId, [], [
+            'dateFrom' => $dateFrom,
+            'dateTo' => $dateTo,
+        ], method: 'POST');
+    }
+
     /**
      * Fetches stats for a given Riddle ID (works with 1.0 & 2.0 Riddles)
      * If $dateFrom and $dateTo are NULL alltime stats will be returned; please not that date from & date to must be set if $overview is set to true.
