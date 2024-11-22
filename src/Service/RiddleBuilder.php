@@ -14,11 +14,12 @@ class RiddleBuilder extends ApiService
      * 
      * @return array the serialized created Riddle
      */
-    public function buildRiddle(string $type, array $build, bool $publishAfterCreation = true): array
+    public function buildRiddle(string $type, array $build, bool $publishAfterCreation = true, ?int $projectId = null): array
     {
         return $this->client->getHTTPConnector()->getArrayContent('riddle-builder', [], [
             'type' => $type,
             'build' => $build,
+            'projectId' => $projectId,
             'publish' => $publishAfterCreation,
         ], method: 'POST');
     }
