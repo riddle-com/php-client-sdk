@@ -35,9 +35,9 @@ abstract class RiddleBuilderFrame
      * 
      * @return array the serialized created Riddle
      */
-    public function build(bool $publishAfterCreation = true): array
+    public function build(bool $publishAfterCreation = true, ?int $projectId = null): array
     {
-        return $this->client->riddleBuilder()->buildRiddle($this->type, $this->build, $publishAfterCreation);
+        return $this->client->riddleBuilder()->buildRiddle($this->type, $this->build, $publishAfterCreation, $projectId);
     }
 
     public function setTitle(string $title): static
