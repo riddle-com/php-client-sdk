@@ -39,7 +39,15 @@ class HTTPConnector
 
     public function getArrayContent(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', array $acceptedCodes = [200], bool $isApi = true): array
     {
-        return $this->request($endpoint, $queryParameters, $jsonParameters, $method, true, $acceptedCodes, $isApi)->getContent();
+        $result = $this->request($endpoint, $queryParameters, $jsonParameters, $method, true, $acceptedCodes, $isApi);
+
+        if (is_array($result)) {
+          // Array can only return if there was an error.
+          throw new ApiRequestException($endpoint, $result[1], $result[0]);
+        }
+
+        return $result->getContent();
+
     }
 
     public function getStringContent(string $endpoint, array $queryParameters = [], array $jsonParameters = [], string $method = 'GET', array $acceptedCodes = [200]): string
