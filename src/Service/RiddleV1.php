@@ -16,7 +16,7 @@ class RiddleV1 extends ApiService
         return $this->client->getHTTPConnector()->getStringContent('api/riddle-v1/embed-code/' . $riddleId);
     }
 
-    public function list(?int $teamId = null, ?string $riddleType = null, array $tagIds = null, ?string $status = null, ?string $search = null, ?string $sortBy = null, ?string $sortOrder = null, ?int $page = null): array
+    public function list(?int $teamId = null, ?string $riddleType = null, ?array $tagIds = null, ?string $status = null, ?string $search = null, ?string $sortBy = null, ?string $sortOrder = null, ?int $page = null): array
     {
         return $this->client->getHTTPConnector()->getArrayContent('api/riddle-v1/list', [
             'teamId' => $teamId,
