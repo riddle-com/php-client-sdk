@@ -53,7 +53,7 @@ class Riddle extends ApiService
      * 
      * @return array array of serialized Riddles
      */
-    public function list(?int $teamId = null, ?string $riddleType = null, array $tagIds = null, ?string $status = null, ?string $search = null, ?string $sortBy = null, ?string $sortOrder = null, ?int $page = null): array
+    public function list(?int $teamId = null, ?string $riddleType = null, ?array $tagIds = null, ?string $status = null, ?string $search = null, ?string $sortBy = null, ?string $sortOrder = null, ?int $page = null): array
     {
         return $this->client->getHTTPConnector()->getArrayContent('riddle/list', [], [
             'team' => $teamId,
